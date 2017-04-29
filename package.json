@@ -1,0 +1,18 @@
+{
+  "name": "table-top-2d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "uuid": "^3.0.1",
+    "webpack": "^2.4.1",
+    "ws": "^2.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack ./src/client/index.js ./dist/bundle.js && node ./src/index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
