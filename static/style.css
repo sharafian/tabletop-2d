@@ -2,41 +2,6 @@
   position: absolute;
 }
 
-.object_1 {
-  width: 50px;
-  height: 50px;
-  background-color: #ff2c2c;
-  border-radius: 25px;
-}
-
-.object_2 {
-  width: 50px;
-  height: 50px;
-  background-color: #e8eea1;
-  border-radius: 0px;
-}
-
-.object_3 {
-  width: 25px;
-  height: 25px;
-  background-color: #d7dc3f;
-  border-radius: 0px;
-}
-
-.object_4 {
-  width: 26px;
-  height: 26px;
-  background-color: #ff992c;
-  border-radius: 13px;
-}
-
-.object_5 {
-  width: 26px;
-  height: 26px;
-  background-color: #45102f;
-  border-radius: 0px;
-}
-
 #hud {
   position: fixed;
   z-index: 99999999999;

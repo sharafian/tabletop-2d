@@ -1,7 +1,7 @@
 const ws = require('ws')
 const uuid = require('uuid')
-const http = require('http')
-const fs = require('fs')
+const Koa = require('koa')
+const koaServe = require('koa-static')
 const path = require('path')
 
 const encode = require('./encode')
@@ -112,28 +112,8 @@ wss.on('connection', (socket) => {
   })
 })
 
-function loadLocal (file) {
-  return fs
-    .readFileSync(path.resolve(__dirname, file))
-    .toString('utf8')
-}
-
-const mainPage = loadLocal('../static/index.html')
-const scriptPage = loadLocal('../dist/bundle.js')
-const stylePage = loadLocal('../static/style.css')
-
-const server = http.createServer((req, res) => {
-  console.log('serving page')
-  res.writeHead(200, { 'Content-Type': 'text/html' })
-  res.write(mainPage
-    .replace(
-      '<script src="../dist/bundle.js"></script>',
-      '<script>' + scriptPage + '</script>')
-    .replace(
-      '<link type="text/css" rel="stylesheet"href="./style.css" />',
-      '<style>' + stylePage + '</style>'))
-  res.end()
-})
-
+const app = new Koa()
+app.use(koaServe(path.resolve(__dirname, '../static')))
+app.use(koaServe(path.resolve(__dirname, '../dist')))
 console.log('listening on 35469')
-server.listen(35469)
+app.listen(35469)

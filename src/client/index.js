@@ -12,15 +12,18 @@ $(document).ready(function onLoad () {
 
   socket.onmessage = function (msg) {
     const reader = new FileReader()
-    reader.readAsBinaryString(msg.data)
+    reader.readAsArrayBuffer(msg.data)
     reader.onloadend = function () {
       rpc.handleRpc(reader.result)
     }
   }
 
   $(document).keypress(function keyPress (event) {
+    console.log('EVENT KEY:', event.key)
     if (event.key === 'A') {
       const source = window.prompt('Enter the URL of the image you want to add')
+      if (!source) return
+
       const id = 'object_' + window.myNextId++
       const x = 0
       const y = 0
@@ -43,9 +46,24 @@ $(document).ready(function onLoad () {
 
     if (event.key === 'C') {
       const newColor = window.prompt('Enter your new desired color')
+      if (!newColor) return
+
       if (newColor.length === 7 && newColor.match(/#[0-f]{6}/)) {
         window.myColor = newColor
       }
+    }
+
+    if (event.key === 'D') {
+      const datSource = window.prompt('Enter the URL of the data you want to load')
+      if (!datSource) return
+
+      fetch(datSource).then((response) => {
+        return response.text()
+      }).then((text) => {
+        const buf = Buffer.from(text, 'base64')
+        rpc.handleRpc(buf)
+        socket.send(buf)
+      })
     }
   })
 

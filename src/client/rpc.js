@@ -89,8 +89,8 @@ function handleRpcInner (decoder) {
 }
 
 function handleRpc (data) {
-  const buffer = Buffer.from(data, 'binary')
-  // console.log(buffer)
+  const buffer = new Buffer(data)
+  console.log(buffer.toString('hex'))
   handleRpcInner(new decode.Decoder(buffer))
 }
 
