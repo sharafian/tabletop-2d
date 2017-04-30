@@ -20,7 +20,6 @@ $(document).ready(function onLoad () {
   }
 
   $(document).keypress(function keyPress (event) {
-    console.log('EVENT KEY:', event.key)
     if (event.key === 'A') {
       const source = window.prompt('Enter the URL of the image you want to add')
       if (!source) return

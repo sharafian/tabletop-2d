@@ -90,7 +90,7 @@ function handleRpcInner (decoder) {
 
 function handleRpc (data) {
   const buffer = new Buffer(data)
-  console.log(buffer.toString('hex'))
+  // console.log(buffer.toString('hex'))
   handleRpcInner(new decode.Decoder(buffer))
 }
 
