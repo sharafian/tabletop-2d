@@ -15,13 +15,35 @@ const wss = new ws.Server({
 const state = {}
 
 function _handleMessageInner (decoder) {
-  if (decoder.readUInt8() !== 0x02) return
+  const method = decoder.readUInt8()
 
-  const x = decoder.readUInt16()
-  const y = decoder.readUInt16()
-  const id = decoder.readLengthPrefixedString()
+  if (method === 0x02) {
+    const x = decoder.readUInt16()
+    const y = decoder.readUInt16()
+    const id = decoder.readLengthPrefixedString()
 
-  state[id] = { x, y }
+    if (!state[id]) state[id] = {}
+    state[id].x = x
+    state[id].y = y
+  }
+
+  else if (method === 0x06) {
+    const id = decoder.readLengthPrefixedString()
+
+    if (!state[id]) state[id] = {}
+    state[id].lock = true
+  }
+
+  else if (method === 0x05) {
+    const x = decoder.readUInt16()
+    const y = decoder.readUInt16()
+    const source = decoder.readLengthPrefixedString()
+    const id = decoder.readLengthPrefixedString()
+
+    state[id] = { source, x, y }
+  }
+
+  else return
 
   if (decoder.length()) _handleMessageInner(decoder)
 }
@@ -32,8 +54,19 @@ function handleMessage (message) {
 
 function _batchObjectPositionsInner (keys) {
   if (keys.length === 0) return new Buffer([])
+  const entry = state[keys[0]]
+
+  const nextCmd = entry.source
+    ? encode.addObject(keys[0], entry.source, entry.x, entry.y)
+    : encode.moveObject(keys[0], entry.x, entry.y)
+
+  const lockCmd = entry.lock
+    ? encode.lockObject(keys[0])
+    : new Buffer([])
+
   return Buffer.concat([
-    encode.moveObject(keys[0], state[keys[0]].x, state[keys[0]].y),
+    nextCmd,
+    lockCmd,
     _batchObjectPositionsInner(keys.slice(1))
   ])
 }

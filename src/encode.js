@@ -14,7 +14,7 @@ function moveObject (id, x, y) {
     new Buffer([ 0x02,
       x >> 8 & 0xff, x & 0xff,
       y >> 8 & 0xff, y & 0xff,
-      id.length]),
+      id.length ]),
     Buffer.from(id, 'utf8')
   ])
 }
@@ -28,9 +28,28 @@ function grabObject (id, color) {
   ])
 }
 
-function dropObject (id, color) {
+function dropObject (id) {
   return Buffer.concat([
     new Buffer([ 0x04, id.length ]),
+    Buffer.from(id, 'utf8')
+  ])
+}
+
+function addObject (id, source, x, y) {
+  return Buffer.concat([
+    new Buffer([ 0x05,
+      x >> 8 & 0xff, x & 0xff,
+      y >> 8 & 0xff, y & 0xff,
+      source.length ]),
+    Buffer.from(source, 'utf8'),
+    new Buffer([ id.length ]),
+    Buffer.from(id, 'utf8')
+  ])
+}
+
+function lockObject (id) {
+  return Buffer.concat([
+    new Buffer([ 0x06, id.length ]),
     Buffer.from(id, 'utf8')
   ])
 }
@@ -39,5 +58,7 @@ module.exports = {
   setColor,
   moveObject,
   grabObject,
-  dropObject
+  dropObject,
+  addObject,
+  lockObject
 }

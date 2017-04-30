@@ -36,3 +36,18 @@
   background-color: #45102f;
   border-radius: 0px;
 }
+
+#hud {
+  position: fixed;
+  z-index: 99999999999;
+  top: 0px;
+  right: 0px; 
+}
+
+td {
+  opacity: 0.3;
+  font-family: sans-serif;
+  text-align: right;
+  padding-right: 5px;
+  margin-top: 5px;
+}

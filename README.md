@@ -43,3 +43,32 @@
 1. The method byte, `04`.
 2. The length prefix for the element ID.
 3. The element ID, `object1`.
+
+### Add Object
+
+```
+05 00 c1 01 81 1a 68 74 74 70 3a 2f 2f 65 78 61 6d 70 6c 65 2e 63 6f 6d 2f 69 6d
+1  2     3     4  5
+
+67 2e 70 6e 67 07 6f 62 6a 65 63 74 31
+               6  7
+```
+
+1. The method byte, `05`.
+2. The x coordinate (left) to add the object at.
+3. The y coordinate (top) to add the object at.
+4. The length prefix for the image source.
+5. The image source, `http://example.com/image.png`.
+6. The length prefix for the element ID.
+7. The element ID, `object1`.
+
+### Lock Object
+
+```
+06 07 6f 62 6a 65 63 74 31
+1  2  3
+```
+
+1. The method byte, `06`.
+2. The length prefix for the element ID.
+3. The element ID, `object1`.
