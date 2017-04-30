@@ -1,6 +1,18 @@
 const encode = require('../src/encode')
+
+// each of these is applied as parameters to the createObject
+// call. They're stored in a big array for convenience of writing.
+
 const objects = [
+
+  // First element contains the element ID.  Second element contains the URL to
+  // the image itself.  Third and fourth elements are page coordinates.  The x
+  // coordinate is distance from the left, and the y is distance from the top.
+
   ['chess-board', '/img/board.png', 30, 30],
+
+  // The board is a 60px grid at the offset 30, 30, so all the coordinates are
+  // written accordingly.
 
   ['chess-rook-1-black', '/img/black_rook.png', 35, 35],
   ['chess-knight-1-black', '/img/black_knight.png', 95, 35],
@@ -39,11 +51,25 @@ const objects = [
   ['chess-pawn-8-white', '/img/white_pawn.png', 455, 395]
 ]
 
+// Now we use the actual encode functions to turn this configuration into a
+// sequence of RPC calls. These will get broadcast to all the players as a
+// batched RPC call.
+
 const encoded = Buffer
   .concat([
     ...objects.map((e) => encode.addObject.apply(null, e)),
+
+    // A lockObject command is added after we place all the chess objects, in
+    // order to lock down the chess board.
+
     encode.lockObject('chess-board')
   ])
   .toString('base64')
+
+// The binary data is encoded into base64 so that the browser doesn't get confused
+// and try to turn the binary data into UTF-8. The base64 data is printed, and can
+// be redirected into a file like so:
+//
+// node ./scripts/generate_chess.js > ./static/chess.dat
 
 console.log(encoded)

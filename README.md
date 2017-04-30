@@ -13,12 +13,22 @@ npm install
 npm start
 ```
 
+Hit `Shift+D` to bring up the "load file" prompt, and enter `/chess.dat`.
+You'll see a set-up chess board appear on the page. You can look at
+`scripts/generate_chess.js` to see how to make a file yourself.
+
+_Note: The assets used for the chess example were created by user 'Cburnett' on
+Wikipedia, and are under the [CC BY-SA
+3.0](http://creativecommons.org/licenses/by-sa/3.0/) license_
+
 ## Planned Features
 
-- Loading many objects from a file
+- ~~Loading many objects from a file~~
 - Decks
 - Dice
 - Multiple boards on one server
+- Deleting objects
+- Unlocking objects
 
 ## RPC Format
 
