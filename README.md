@@ -1,3 +1,31 @@
+# Tabletop 2d
+
+Tabletop 2d is a project to create something akin to [Tabletop
+Simulator](http://berserk-games.com/tabletop-simulator/), but for the browser.
+
+Instead of using 3d models, Tabletop 2d uses regular images. This means it'll
+be easier to port any game's pieces into it.
+
+To test the game on localhost, run:
+
+```
+npm install
+npm start
+```
+
+## Planned Features
+
+- Loading many objects from a file
+- Decks
+- Dice
+- Multiple boards on one server
+
+## RPC Format
+
+Tabletop 2d uses a binary format for RPC, in order to minimize the amount of
+data transmitted when objects are being moved. RPC calls can be batched
+together through concatenation.
+
 ### Set Color
 
 ```
