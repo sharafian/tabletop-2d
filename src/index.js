@@ -2,14 +2,23 @@ const ws = require('ws')
 const uuid = require('uuid')
 const Koa = require('koa')
 const koaServe = require('koa-static')
+const koaProxy = require('koa-proxy')
+const router = require('koa-router')()
 const path = require('path')
+
+const app = new Koa()
+app.use(koaServe(path.resolve(__dirname, '../static')))
+app.use(koaServe(path.resolve(__dirname, '../dist')))
+
+console.log('listening on 35469')
+const server = app.listen(35469)
 
 const encode = require('./encode')
 const decode = require('./decode')
 
 const wss = new ws.Server({
   perMessageDeflate: false,
-  port: 35468
+  server: server
 })
 
 const state = {}
@@ -111,9 +120,3 @@ wss.on('connection', (socket) => {
     console.log('closing connection', id)
   })
 })
-
-const app = new Koa()
-app.use(koaServe(path.resolve(__dirname, '../static')))
-app.use(koaServe(path.resolve(__dirname, '../dist')))
-console.log('listening on 35469')
-app.listen(35469)

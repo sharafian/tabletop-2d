@@ -8,7 +8,8 @@ window.myNextId = 6
 window.myNextZIndex = 2
 
 $(document).ready(function onLoad () {
-  const socket = window.mySocket = new WebSocket('ws://localhost:35468')
+  const protocol = (location.protocol === 'https:') ? 'wss:' : 'ws:'
+  const socket = window.mySocket = new WebSocket(protocol + '//' + location.host + '/websocket')
 
   socket.onmessage = function (msg) {
     const reader = new FileReader()
@@ -31,6 +32,8 @@ $(document).ready(function onLoad () {
       const elem = document.createElement('img')
       elem.class = 'object'
       elem.style.position = 'absolute'
+      elem.style.top = 0
+      elem.style.left = 0
       elem.id = id
       elem.src = source
       document.body.appendChild(elem)
