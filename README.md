@@ -15,7 +15,7 @@ npm start
 
 Hit `Shift+D` to bring up the "load file" prompt, and enter `/chess.dat`.
 You'll see a set-up chess board appear on the page. You can look at
-`scripts/generate_chess.js` to see how to make a file yourself.
+`scripts/generate-chess.js` to see how to make a file yourself.
 
 _Note: The assets used for the chess example were created by user 'Cburnett' on
 Wikipedia, and are under the [CC BY-SA
@@ -25,6 +25,7 @@ Wikipedia, and are under the [CC BY-SA
 
 - ~~Loading many objects from a file~~
 - ~~Set Grid~~
+- Websocket Reconnection
 - Decks
 - Dice
 - Multiple boards on one server
@@ -120,5 +121,37 @@ together through concatenation.
 1  2
 ```
 
-1. The method byte, `07`
+1. The method byte, `07`.
 2. The grid size, in pixels.
+
+### Add Die
+
+```
+08 00 c1 01 81 02 09 2f 63 6f 69 6e 31 2e 70 6e 67 09 2f 63 6f 69 6e 32 2e 70 
+1  2     3     4  5  6                             7  8
+
+6e 67 07 6f 62 6a 65 63 74 31
+      9  10
+```
+
+1. The method byte, `08`.
+2. The x coordinate (left) to add the die at.
+3. The y coordinate (top) to add the die at.
+4. Length prefix for a list of sides, `02`.
+5. Length prefix for first side's image source.
+6. First side's image source, `/coin1.png`.
+7. Length prefix for the second side's image source.
+8. Second side's image source, `/coin2.png`.
+9. Length prefix for the die's ID.
+10. The die's ID, `object1`.
+
+### Roll Die
+
+```
+09 07 6f 62 6a 65 63 74 31
+1  2  3
+```
+
+1. The method byte, `09`.
+2. Length prefix for the die's ID.
+3. The die's ID, `object1`.

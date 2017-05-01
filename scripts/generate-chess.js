@@ -70,6 +70,6 @@ const encoded = Buffer
 // and try to turn the binary data into UTF-8. The base64 data is printed, and can
 // be redirected into a file like so:
 //
-// node ./scripts/generate_chess.js > ./static/chess.dat
+// node ./scripts/generate-chess.js > ./static/chess.dat
 
 console.log(encoded)
