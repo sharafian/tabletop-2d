@@ -58,6 +58,17 @@ function handleLockObject (decoder) {
   $(elem).draggable('disable')
 }
 
+function handleGridSize (decoder) {
+  const gridSize = decoder.readUInt16()
+
+  document.body.style['background-size'] = (+gridSize)
+    ? `${gridSize}px ${gridSize}px`
+    : 'none'
+  document.body.style['background-image'] =
+    'linear-gradient(to right, #ccc 1px, transparent 1px),' +
+    'linear-gradient(to bottom, #ccc 1px, transparent 1px)'
+}
+
 function handleRpcInner (decoder) {
   const method = decoder.readUInt8()
   switch (method) {
@@ -78,6 +89,9 @@ function handleRpcInner (decoder) {
       break
     case 0x06:
       handleLockObject(decoder)
+      break
+    case 0x07:
+      handleGridSize(decoder)
       break
     default:
       // TODO: error?

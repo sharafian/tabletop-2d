@@ -10,8 +10,9 @@ const app = new Koa()
 app.use(koaServe(path.resolve(__dirname, '../static')))
 app.use(koaServe(path.resolve(__dirname, '../dist')))
 
-console.log('listening on 35469')
-const server = app.listen(35469)
+const port = process.env.TABLETOP_PORT || 35469
+console.log('listening on ' + port)
+const server = app.listen(port)
 
 const encode = require('./encode')
 const decode = require('./decode')
@@ -21,6 +22,7 @@ const wss = new ws.Server({
   server: server
 })
 
+let gridSize = 0
 const state = {}
 
 function _handleMessageInner (decoder) {
@@ -41,6 +43,11 @@ function _handleMessageInner (decoder) {
 
     if (!state[id]) state[id] = {}
     state[id].lock = true
+  }
+
+  else if (method === 0x07) {
+    const size = decoder.readUInt16()
+    gridSize = size    
   }
 
   else if (method === 0x05) {
@@ -107,6 +114,7 @@ wss.on('connection', (socket) => {
 
   socket.send(Buffer.concat([
     encode.setColor(colors[nextColor++ % colors.length]),
+    encode.setGrid(gridSize),
     batchObjectPositions()
   ]))
 

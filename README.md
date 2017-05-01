@@ -24,11 +24,13 @@ Wikipedia, and are under the [CC BY-SA
 ## Planned Features
 
 - ~~Loading many objects from a file~~
+- ~~Set Grid~~
 - Decks
 - Dice
 - Multiple boards on one server
 - Deleting objects
 - Unlocking objects
+- Snap to Grid
 
 ## RPC Format
 
@@ -110,3 +112,13 @@ together through concatenation.
 1. The method byte, `06`.
 2. The length prefix for the element ID.
 3. The element ID, `object1`.
+
+### Grid Size
+
+```
+07 00 20
+1  2
+```
+
+1. The method byte, `07`
+2. The grid size, in pixels.

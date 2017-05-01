@@ -54,11 +54,19 @@ function lockObject (id) {
   ])
 }
 
+function setGrid (size) {
+  return new Buffer([
+    0x07,
+    size >> 8 & 0xff, size & 0xff
+  ])
+}
+
 module.exports = {
   setColor,
   moveObject,
   grabObject,
   dropObject,
   addObject,
-  lockObject
+  lockObject,
+  setGrid
 }

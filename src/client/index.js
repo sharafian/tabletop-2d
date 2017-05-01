@@ -55,6 +55,20 @@ $(document).ready(function onLoad () {
       }
     }
 
+    if (event.key === 'G') {
+      const gridSize = window.prompt('Enter the desired grid size')
+      if (!gridSize || !(+gridSize < 65000)) return
+
+      document.body.style['background-size'] = (+gridSize)
+        ? `${gridSize}px ${gridSize}px`
+        : 'none'
+      document.body.style['background-image'] =
+        'linear-gradient(to right, #ccc 1px, transparent 1px),' +
+        'linear-gradient(to bottom, #ccc 1px, transparent 1px)'
+
+      socket.send(encode.setGrid(gridSize))
+    }
+
     if (event.key === 'D') {
       const datSource = window.prompt('Enter the URL of the data you want to load')
       if (!datSource) return
