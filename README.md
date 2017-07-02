@@ -155,3 +155,27 @@ together through concatenation.
 1. The method byte, `09`.
 2. Length prefix for the die's ID.
 3. The die's ID, `object1`.
+
+### Chat Message
+
+```
+0a 0b 68 65 6c 6c 6f 20 77 6f 72 6c 64
+1  2  3
+```
+
+1. The method byte, `0a`.
+2. Length prefix for the chat message.
+3. Message contents (utf-8 encoded), `hello world`. 
+
+### Private Chat Message
+
+```
+0b 05 61 6c 69 63 65 0b 68 65 6c 6c 6f 20 77 6f 72 6c 64
+1  2  3              4  5
+```
+
+1. The method byte, `0b`.
+2. Length prefix for the target nickname.
+3. The target nickname (utf-8 encoded), `alice`.
+4. Length prefix for the chat message.
+5. Message contents (utf-8 encoded), `hello world`.
